@@ -1,1 +1,1 @@
-# astro-ecommerce-test
+# Prueba de ecommerce con Astro
