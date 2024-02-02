@@ -1,0 +1,99 @@
+---
+import Layout from "@l/Layout.astro";
+import Product from "@c/Product.astro";
+
+// Endpoint de GraphQL
+const endpoint = "https://store-cs29ogoa.eu.saleor.cloud/graphql/";
+
+// Consulta GraphQL
+const graphqlQuery = {
+  query: `{
+    products(first: 30, channel: "default-channel") {
+      edges {
+        node {
+          id
+          name
+          isAvailableForPurchase
+          pricing {
+            priceRange {
+              start {
+                net {
+                  amount
+                }
+              }
+            }
+          }
+          thumbnail(format: WEBP, size: 300) {
+            url
+          }
+          slug
+        }
+      }
+      totalCount
+    }
+  }`,
+};
+
+// Realiza la petición
+const response = await fetch(endpoint, {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify(graphqlQuery),
+});
+
+// Interfaz para los datos del producto
+interface ProductNode {
+  id: string;
+  name: string;
+  isAvailableForPurchase: boolean;
+  pricing: {
+    priceRange: {
+      start: {
+        net: {
+          amount: number;
+        };
+      };
+    };
+  };
+  thumbnail: {
+    url: string;
+  };
+  slug: string;
+}
+
+// Interfaz para el edge que contiene el nodo del producto
+interface ProductEdge {
+  node: ProductNode;
+}
+
+// Respuesta y mapeo de datos
+const {data} = await response.json();
+const products: ProductNode[] = data.products.edges.map(
+  (edge: ProductEdge) => edge.node
+);
+---
+
+<Layout title="Ecom Saleor">
+  <h1>Productos:</h1>
+  <ul>
+    {
+      products.map((product: ProductNode) => (
+        <Product
+          name={product.name}
+          price={product.pricing.priceRange.start.net.amount}
+          imgUrl={product.thumbnail.url}
+          slug={product.slug}
+        />
+      ))
+    }
+  </ul>
+</Layout>
+
+<style>
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    padding-inline-start: 0;
+  }
+</style>

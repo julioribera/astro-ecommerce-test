@@ -1,0 +1,41 @@
+---
+export const prerender = false;
+
+import Layout from "@l/Layout.astro";
+import {getProductBySlug} from "@u/graphql.js";
+
+const {slug} = Astro.params;
+
+const productData = await getProductBySlug(slug);
+const descriptionObject = JSON.parse(productData.data.product.description);
+const descriptionHtml =
+  descriptionObject?.blocks[0]?.data.text ?? "SIN DESCRIPCION";
+---
+
+<Layout title={productData.data.product.name}>
+  <article>
+    <div>
+      <img
+        src={productData.data.product.images[0].url}
+        alt={productData.data.product.name}
+      />
+    </div>
+    <div>
+      <h1>{productData.data.product.name}</h1>
+      <p>{productData.data.product.pricing.priceRange.start.net.amount} €</p>
+      <p set:html={descriptionHtml} />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  article {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 10px;
+  }
+
+  img {
+    max-width: 400px;
+  }
+</style>

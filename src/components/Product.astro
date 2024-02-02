@@ -1,0 +1,35 @@
+---
+import {Image} from "astro:assets";
+
+interface Props {
+  name: string;
+  price: number;
+  imgUrl: string;
+  slug: string;
+}
+
+const {name, price, imgUrl, slug} = Astro.props;
+---
+
+<article>
+  <a href=`/producto/${slug}`>
+    <Image src={imgUrl} alt={name} height="256" width="256" />
+    <hgroup>
+      <h4>{name}</h4>
+      <p>{price}€</p>
+    </hgroup>
+  </a>
+  <a href="#" role="button">Add to cart</a>
+</article>
+
+<style>
+  article {
+    text-align: center;
+    line-height: 1.1;
+  }
+  hgroup {
+    h4 {
+      font-size: 1rem;
+    }
+  }
+</style>

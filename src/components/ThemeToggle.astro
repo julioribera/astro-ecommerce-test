@@ -1,0 +1,30 @@
+<a id="theme-toggle" role="button" href="#" class="contrast">Cambiar Tema</a>
+
+<script>
+
+    const button = document.getElementById('theme-toggle');
+    
+    if (button) { // Verifica que "button" no es null antes de añadir el event listener
+      button.addEventListener('click', (event) => {
+        event.preventDefault(); // Previene la acción por defecto del enlace
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'light'; // 'light' es el valor por defecto
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+</script>
+
+
+<style>
+    a {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+    }
+</style>

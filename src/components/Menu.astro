@@ -1,0 +1,38 @@
+---
+import Cart from "@i/Cart.astro";
+---
+
+<header class="container">
+  <nav>
+    <ul>
+      <a href="/">
+        <li><strong>Magia&Cardistry</strong></li>
+      </a>
+    </ul>
+    <ul>
+      <li><a href="#">Tienda</a></li>
+      <li><a href="#">Escuela</a></li>
+      <li>
+        <a href="#" role="button">
+          <Cart />
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99999;
+  }
+  nav {
+    box-shadow: var(--card-box-shadow);
+    border-radius: 10px;
+    padding: 0px 50px;
+    background: var(--background-color);
+  }
+</style>
