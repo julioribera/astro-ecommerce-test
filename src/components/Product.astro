@@ -9,11 +9,13 @@ interface Props {
 }
 
 const {name, price, imgUrl, slug} = Astro.props;
+
+console.log(imgUrl);
 ---
 
 <article>
   <a href=`/producto-static/${slug}`>
-    <Image src={imgUrl} alt={name} height="256" width="256" />
+    <Image src={imgUrl} alt={name} height={200} width={200} />
     <hgroup>
       <h4>{name}</h4>
       <p>{price}€</p>

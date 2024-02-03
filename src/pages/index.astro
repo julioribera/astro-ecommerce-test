@@ -15,7 +15,7 @@ const products = response.data.products.edges.map((edge) => edge.node);
         <Product
           name={product.name}
           price={product.pricing.priceRange.start.net.amount}
-          imgUrl={product.thumbnail.url}
+          imgUrl={product.images[0].url}
           slug={product.slug}
         />
       ))

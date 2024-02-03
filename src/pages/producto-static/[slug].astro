@@ -29,10 +29,10 @@ console.log(product);
   <article>
     <div>
       <Image
-        src={product.thumbnail.url}
+        src={product.images[0].url}
         alt={product.name}
-        width="500"
-        height="500"
+        width={400}
+        height={400}
         loading="eager"
       />
     </div>
@@ -53,7 +53,7 @@ console.log(product);
   }
   article {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 10px;
   }
 
