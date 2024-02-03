@@ -12,7 +12,7 @@ const {name, price, imgUrl, slug} = Astro.props;
 ---
 
 <article>
-  <a href=`/producto/${slug}`>
+  <a href=`/producto-static/${slug}`>
     <Image src={imgUrl} alt={name} height="256" width="256" />
     <hgroup>
       <h4>{name}</h4>

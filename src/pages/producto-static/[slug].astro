@@ -1,0 +1,56 @@
+---
+import Layout from "@l/Layout.astro";
+import {getProducts} from "@u/graphql.js";
+
+export async function getStaticPaths() {
+  const response = await getProducts();
+  const products = response.data.products.edges.map((edge) => edge.node);
+
+  return products.map((product) => ({
+    params: {
+      slug: product.slug,
+    },
+    props: {
+      product,
+    },
+  }));
+}
+
+const {product} = Astro.props;
+const descriptionObject = JSON.parse(product.description);
+const descriptionHtml =
+  descriptionObject?.blocks[0]?.data.text ?? "SIN DESCRIPCION";
+
+console.log(product);
+---
+
+<Layout title={product.name}>
+  <article>
+    <div>
+      <img src={product.images[0].url} alt={product.name} />
+    </div>
+    <div>
+      <h1>{product.name}</h1>
+      <p>{product.pricing.priceRange.start.net.amount} €</p>
+      <p set:html={descriptionHtml} />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  :root {
+    background-color: #f3fffb;
+  }
+  :root[data-theme="dark"] {
+    background-color: #0a130f;
+  }
+  article {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 10px;
+  }
+
+  img {
+    max-width: 400px;
+  }
+</style>
