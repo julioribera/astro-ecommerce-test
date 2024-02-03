@@ -34,11 +34,11 @@ export async function getProducts(first = 30, channel = "default-channel") {
               }
             }
           }
-          thumbnail(format: WEBP, size: 300) {
+          thumbnail {
             url
           }
           images {
-            url(format: WEBP)
+            url
           }
           description
           slug
