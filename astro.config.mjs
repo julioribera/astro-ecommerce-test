@@ -8,4 +8,7 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: "cloudflare",
   }),
+  image: {
+    domains: ["store-cs29ogoa.eu.saleor.cloud"],
+  },
 });

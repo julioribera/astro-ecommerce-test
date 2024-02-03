@@ -1,6 +1,7 @@
 ---
 import Layout from "@l/Layout.astro";
 import {getProducts} from "@u/graphql.js";
+import {Image} from "astro:assets";
 
 export async function getStaticPaths() {
   const response = await getProducts();
@@ -27,7 +28,13 @@ console.log(product);
 <Layout title={product.name}>
   <article>
     <div>
-      <img src={product.images[0].url} alt={product.name} />
+      <Image
+        src={product.images[0].url}
+        alt={product.name}
+        width="500"
+        height="500"
+        loading="eager"
+      />
     </div>
     <div>
       <h1>{product.name}</h1>
