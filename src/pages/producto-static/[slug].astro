@@ -1,7 +1,7 @@
 ---
 import Layout from "@l/Layout.astro";
 import {getProducts} from "@u/graphql.js";
-import {Image} from "astro:assets";
+import {Image, getImage} from "astro:assets";
 
 export async function getStaticPaths() {
   const response = await getProducts();
@@ -22,17 +22,22 @@ const descriptionObject = JSON.parse(product.description);
 const descriptionHtml =
   descriptionObject?.blocks[0]?.data.text ?? "SIN DESCRIPCION";
 
-console.log(product);
+const optimizedImage = await getImage({
+  src: product.images[0].url,
+  format: "webp",
+  width: 400,
+  height: 400,
+});
 ---
 
 <Layout title={product.name}>
   <article>
     <div>
       <Image
-        src={product.images[0].url}
+        src={optimizedImage.src}
         alt={product.name}
-        width={400}
-        height={400}
+        width={optimizedImage.attributes.width}
+        height={optimizedImage.attributes.height}
         loading="eager"
       />
     </div>

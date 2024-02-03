@@ -1,5 +1,5 @@
 ---
-import {Image} from "astro:assets";
+import {Image, getImage} from "astro:assets";
 
 interface Props {
   name: string;
@@ -10,12 +10,22 @@ interface Props {
 
 const {name, price, imgUrl, slug} = Astro.props;
 
-console.log(imgUrl);
+const optimizedImage = await getImage({
+  src: imgUrl,
+  format: "webp",
+  width: 200,
+  height: 200,
+});
 ---
 
 <article>
   <a href=`/producto-static/${slug}`>
-    <Image src={imgUrl} alt={name} height={200} width={200} />
+    <Image
+      src={optimizedImage.src}
+      alt={name}
+      width={optimizedImage.attributes.width}
+      height={optimizedImage.attributes.height}
+    />
     <hgroup>
       <h4>{name}</h4>
       <p>{price}€</p>
